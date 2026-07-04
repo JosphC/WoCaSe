@@ -4,9 +4,7 @@
 
 WoCaSe is composed of two loosely coupled subsystems that communicate through a bridge module:
 
-```
-![WoCaSe Architecture](images/architecture.png)
-```
+![WoCaSe Architecture](/docs/images/architecture.png)
 
 ## Subsystem A: `wcs_modules` — Instrumentation & Build
 
