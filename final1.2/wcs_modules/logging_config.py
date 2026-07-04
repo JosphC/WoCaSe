@@ -50,7 +50,7 @@ class _BareFormatter(logging.Formatter):
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
-_LOG_DIR = os.path.join(r"D:\casdev\td5", "WCS_logs")
+_LOG_DIR = os.path.join(r"C:\WCS_logs")
 
 
 def setup_logging(log_dir: str = _LOG_DIR) -> None:
