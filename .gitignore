@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.egg-info/
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# PyInstaller output
+dist/
+build/
+final1.2/dist/
+final1.2/build/
+*.exe
+
+# Logs
+*.log
+wcs_modules/logs/
+final1.2/wcs_modules/logs/
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.user
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Temp icon cache (generated at runtime)
+wcs_icons/
+
+# Archive versions (keep only final1.2)
+final1.1/
+final1.2.1/
+final1.2.1.zip
+final1.2.2.zip
+final1.2.3.zip
+final1.2.4.zip
+
+# Binary / large files
+*.xlsx
+*.xls
+logo
+
+# Local bench data
+bench_results/
