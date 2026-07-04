@@ -189,7 +189,6 @@ Documentația detaliată (în limba engleză) este disponibilă în folderul [`d
 | [Simulation Model](docs/simulation-model.md) | Modelul matematic, scenariile și parametrii de cost             |
 | [API Reference](docs/api-reference.md)       | API-ul programatic al ambelor subsisteme                        |
 | [Configuration](docs/configuration.md)       | Toți parametrii și căile configurabile                          |
-| [Testing](docs/testing.md)                   | Strategia de testare, rularea testelor, auto-teste              |
 | [Troubleshooting](docs/troubleshooting.md)   | Erori frecvente și soluții                                      |
 
 ---
