@@ -5,31 +5,7 @@
 WoCaSe is composed of two loosely coupled subsystems that communicate through a bridge module:
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        wcs_modules                              │
-│  (Instrumentation & Build)                                      │
-│                                                                 │
-│  qt_ui.py ──► main.py ──► arxml_processor / gpt_detector /     │
-│                           code_modifier / xml_modifier /        │
-│                           tdcl_modifier / file_generator /      │
-│                           td5_builder                           │
-│                    │                                            │
-│                    ▼                                            │
-│           simulator_bridge.py                                   │
-│                    │                                            │
-└────────────────────┼────────────────────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────────────────────┐
-│                      dem_simulator                              │
-│  (Analytical Simulation Engine)                                 │
-│                                                                 │
-│  extractor ──► config/costs/scenarios ──► engine ──► simulation │
-│                                                     ──► analysis│
-│                                                     ──► excel   │
-│                                                                 │
-│  bench_store / bench_store_db          transfer_fit             │
-│  selftest                              exceptions               │
-└─────────────────────────────────────────────────────────────────┘
+![WoCaSe Architecture](docs/architecture.png)
 ```
 
 ## Subsystem A: `wcs_modules` — Instrumentation & Build
@@ -60,13 +36,13 @@ qt_ui.py (GUI)
 
 ### Key Classes
 
-| Class | Module | Description |
-|-------|--------|-------------|
-| `ModernWCSApp` | `qt_ui.py` | Main window (`QMainWindow`); 2 tabs + terminal + sidebar |
-| `_Worker` | `qt_ui.py` | Background thread (`QThread`) executing the pipeline |
-| `BenchUploadDialog` | `qt_ui.py` | Dialog for importing bench measurement data |
-| `ContactSupportDialog` | `qt_ui.py` | Contact information dialog |
-| `TargetEntry` | `td5_builder.py` | Lightweight container for parsed build targets |
+| Class                  | Module           | Description                                              |
+| ---------------------- | ---------------- | -------------------------------------------------------- |
+| `ModernWCSApp`         | `qt_ui.py`       | Main window (`QMainWindow`); 2 tabs + terminal + sidebar |
+| `_Worker`              | `qt_ui.py`       | Background thread (`QThread`) executing the pipeline     |
+| `BenchUploadDialog`    | `qt_ui.py`       | Dialog for importing bench measurement data              |
+| `ContactSupportDialog` | `qt_ui.py`       | Contact information dialog                               |
+| `TargetEntry`          | `td5_builder.py` | Lightweight container for parsed build targets           |
 
 ### Data Flow: Full Pipeline
 
@@ -140,17 +116,17 @@ __main__.py (CLI)
 
 ### Key Classes
 
-| Class | Module | Description |
-|-------|--------|-------------|
-| `ProjectConfig` | `config.py` | All DEM parameters affecting MainFunction runtime |
-| `FrfBlockConfig` | `config.py` | Per-block freeze-frame configuration (frozen dataclass) |
-| `ProjectDefinition` | `config.py` | Groups config + metadata for a full project definition |
-| `MicroCosts` | `costs.py` | Per-operation costs in µs (20 tunable fields) |
-| `Scenario` | `scenarios.py` | Frozen dataclass modeling one WCS scenario |
-| `DemMainFunctionSimulator` | `engine.py` | Step-by-step execution model |
-| `MonteCarloResult` | `analysis.py` | Result container for MC analysis |
-| `FitResult` | `simulation.py` | Result container for auto-fit optimization |
-| `SimulationResults` | `simulator_bridge.py` | Container returned to the GUI |
+| Class                      | Module                | Description                                             |
+| -------------------------- | --------------------- | ------------------------------------------------------- |
+| `ProjectConfig`            | `config.py`           | All DEM parameters affecting MainFunction runtime       |
+| `FrfBlockConfig`           | `config.py`           | Per-block freeze-frame configuration (frozen dataclass) |
+| `ProjectDefinition`        | `config.py`           | Groups config + metadata for a full project definition  |
+| `MicroCosts`               | `costs.py`            | Per-operation costs in µs (20 tunable fields)           |
+| `Scenario`                 | `scenarios.py`        | Frozen dataclass modeling one WCS scenario              |
+| `DemMainFunctionSimulator` | `engine.py`           | Step-by-step execution model                            |
+| `MonteCarloResult`         | `analysis.py`         | Result container for MC analysis                        |
+| `FitResult`                | `simulation.py`       | Result container for auto-fit optimization              |
+| `SimulationResults`        | `simulator_bridge.py` | Container returned to the GUI                           |
 
 ### Exception Hierarchy
 
@@ -169,10 +145,10 @@ SimulatorError (base)
 
 Two independent logging configurations:
 
-| Logger | Module | Console Format | File Format |
-|--------|--------|----------------|-------------|
-| `wcs.*` | `wcs_modules/logging_config.py` | `[LEVEL] message` | `[YYYY-MM-DD HH:MM:SS] LEVEL - module - message` |
-| `dem_simulator` | `dem_simulator/logging_setup.py` | Standard | Standard with timestamps |
+| Logger          | Module                           | Console Format    | File Format                                      |
+| --------------- | -------------------------------- | ----------------- | ------------------------------------------------ |
+| `wcs.*`         | `wcs_modules/logging_config.py`  | `[LEVEL] message` | `[YYYY-MM-DD HH:MM:SS] LEVEL - module - message` |
+| `dem_simulator` | `dem_simulator/logging_setup.py` | Standard          | Standard with timestamps                         |
 
 The `wcs.td5` sub-logger uses a bare formatter (no prefix) for console output so that TD5 CLI output appears unmodified.
 
@@ -189,8 +165,8 @@ The `wcs.td5` sub-logger uses a bare formatter (no prefix) for console output so
 
 ### Persistence
 
-| Data | Storage | Location |
-|------|---------|----------|
-| Bench costs + configs | SQLite (WAL) | `bench_store.db` |
-| Project history | `QSettings` (Windows Registry) | `HKCU\Software\Schaeffler\WoCaSe` |
-| Log files | Rotating text files | `wcs_modules/logs/` |
+| Data                  | Storage                        | Location                          |
+| --------------------- | ------------------------------ | --------------------------------- |
+| Bench costs + configs | SQLite (WAL)                   | `bench_store.db`                  |
+| Project history       | `QSettings` (Windows Registry) | `HKCU\Software\Schaeffler\WoCaSe` |
+| Log files             | Rotating text files            | `wcs_modules/logs/`               |
