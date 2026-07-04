@@ -160,11 +160,3 @@ The `wcs.td5` sub-logger uses a bare formatter (no prefix) for console output so
   - `simulation_done(object)` — `SimulationResults` container
 
 `stdout`/`stderr` are redirected to the terminal widget via the `_Redirect` wrapper during worker execution.
-
-### Persistence
-
-| Data                  | Storage                        | Location                          |
-| --------------------- | ------------------------------ | --------------------------------- |
-| Bench costs + configs | SQLite (WAL)                   | `bench_store.db`                  |
-| Project history       | `QSettings` (Windows Registry) | `HKCU\Software\Schaeffler\WoCaSe` |
-| Log files             | Rotating text files            | `wcs_modules/logs/`               |
